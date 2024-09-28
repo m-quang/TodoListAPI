@@ -9,11 +9,6 @@ namespace ToDoListAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
             ConfigureServices(builder.Services);
 
             var app = builder.Build();
@@ -39,6 +34,9 @@ namespace ToDoListAPI
         {
             services.AddControllers();
             services.AddScoped<Services.ITaskService, Services.TaskService>();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
 
             // Add your DbContext here, e.g.:
             // services.AddDbContext<YourDbContext>(options => 

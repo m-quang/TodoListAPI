@@ -14,10 +14,10 @@
             var newTask = new DTOs.Task
             {
                 Id = taskDto.Id,
-                ProjectID = taskDto.ProjectID,
+                ProjectId = taskDto.ProjectId,
                 Content = taskDto.Content,
                 Description = taskDto.Description,
-                CreateAt = taskDto.CreateAt,
+                CreatedAt = taskDto.CreatedAt,
                 Due = taskDto.Due,
                 Priority = taskDto.Priority,
                 Order = taskDto.Order,
