@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using ToDoListAPI.Services;
 
@@ -9,9 +10,11 @@ namespace ToDoListAPI.Controllers
     public class TasksController : Controller
     {
         private readonly ITaskService _taskService;
+        private TodoListContext _dbContext;
 
-        public TasksController(ITaskService taskService)
+        public TasksController(TodoListContext context, ITaskService taskService)
         {
+            _dbContext = context;
             _taskService = taskService;
         }
 
@@ -22,7 +25,7 @@ namespace ToDoListAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTask(DTOs.Task task)
+        public async Task<IActionResult> CreateTask(Models.Task task)
         {
             if (task == null || string.IsNullOrEmpty(task.Content))
             {
@@ -40,25 +43,25 @@ namespace ToDoListAPI.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> UpdateTask(DTOs.Task task)
+        public async Task<IActionResult> UpdateTask(Models.Task task)
         {
             return CreatedAtAction(nameof(UpdateTask), new { id = "1" });
         }
 
         [HttpPost("{id}/Close")]
-        public async Task<IActionResult> CloseTask(DTOs.Task task)
+        public async Task<IActionResult> CloseTask(Models.Task task)
         {
             return Ok();
         }
 
         [HttpPost("{id}/Reopen")]
-        public async Task<IActionResult> ReopenTask(DTOs.Task task)
+        public async Task<IActionResult> ReopenTask(Models.Task task)
         {
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTask(DTOs.Task task)
+        public async Task<IActionResult> DeleteTask(Models.Task task)
         {
             return Ok();
         }

@@ -1,17 +1,19 @@
-﻿namespace ToDoListAPI.Services
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ToDoListAPI.Services
 {
     public class TaskService : ITaskService
     {
-        //private readonly YourDbContext _context;
+        private readonly TodoListContext _context;
 
-        //public TaskService(YourDbContext context)
-        //{
-        //    _context = context;
-        //}
-
-        public async Task<DTOs.Task> AddTaskAsync(DTOs.Task taskDto)
+        public TaskService(TodoListContext context)
         {
-            var newTask = new DTOs.Task
+            _context = context;
+        }
+
+        public async Task<Models.Task> AddTaskAsync(Models.Task taskDto)
+        {
+            var newTask = new Models.Task
             {
                 Id = taskDto.Id,
                 ProjectId = taskDto.ProjectId,
@@ -24,8 +26,8 @@
                 IsCompleted = taskDto.IsCompleted
             };
 
-            //_context.Tasks.Add(newTask);
-            //await _context.SaveChangesAsync();
+            _context.Tasks.Add(newTask);
+            await _context.SaveChangesAsync();
 
             return newTask;
         }

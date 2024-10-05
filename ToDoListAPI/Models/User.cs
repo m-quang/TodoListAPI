@@ -1,7 +1,10 @@
-﻿namespace ToDoListAPI.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToDoListAPI.Models
 {
     public class User
     {
+        [Key]
         public string Id { get; set; }
         public string Email { get; set; }
         public string FullName { get; set;}

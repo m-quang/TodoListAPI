@@ -1,7 +1,9 @@
-﻿namespace ToDoListAPI.Services
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ToDoListAPI.Services
 {
     public interface ITaskService
     {
-        Task<DTOs.Task> AddTaskAsync(DTOs.Task task);
+        Task<Models.Task> AddTaskAsync(Models.Task task);
     }
 }

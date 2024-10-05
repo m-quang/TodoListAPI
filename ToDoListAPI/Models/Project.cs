@@ -1,7 +1,10 @@
-﻿namespace ToDoListAPI.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToDoListAPI.Models
 {
     public class Project
     {
+        [Key]
         public string Id { get; set; }
         public string Name { get; set; }
         public string Color { get; set; }

@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 namespace ToDoListAPI
 {
     // https://developer.todoist.com
@@ -8,8 +11,20 @@ namespace ToDoListAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Get connection string
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            // Initialising my DbContext inside the DI Container
+            builder.Services.AddDbContext<TodoListContext>(options
+                => options.UseNpgsql(connectionString));
+
             // Add services to the container.
-            ConfigureServices(builder.Services);
+            builder.Services.AddControllers();
+            builder.Services.AddScoped<Services.ITaskService, Services.TaskService>();
+
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
@@ -28,19 +43,6 @@ namespace ToDoListAPI
             app.MapControllers();
 
             app.Run();
-        }
-
-        public static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-            services.AddScoped<Services.ITaskService, Services.TaskService>();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
-
-            // Add your DbContext here, e.g.:
-            // services.AddDbContext<YourDbContext>(options => 
-            //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
     }
 }
